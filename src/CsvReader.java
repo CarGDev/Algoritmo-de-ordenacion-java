@@ -7,9 +7,9 @@ public class CsvReader {
     public static final String SEPARATOR = ";";
     public static final String QUOTE = "\"";
     private int i = 0;
-    String tempDensity[] = new String[20];
-    int density[] = new int[20];
-    String city[] = new String[20];
+    String tempDensity[]; // = new String[20];
+    int density[]; // = new int[20];
+    String city[]; // = new String[20];
 
     public void CsvReader () throws IOException {
 
@@ -18,14 +18,27 @@ public class CsvReader {
         try {
 
             br = new BufferedReader(new FileReader("../MOCK_DATA.csv"));
+            String line2 = br.readLine();
+
+            while (null != line2) {
+                //String[] fields = line.split(SEPARATOR);
+                //System.out.println(Arrays.toString(fields));
+                i++;
+                line2 = br.readLine();
+            }
+
+            tempDensity = new String[i];
+            density = new int[i];
+            city = new String[i];
+            i = 0;
+
+            br = new BufferedReader(new FileReader("../MOCK_DATA.csv"));
             String line = br.readLine();
 
             while (null != line) {
                 String[] fields = line.split(SEPARATOR);
-                //System.out.println(Arrays.toString(fields));
 
                 fields = removeTrailingQuotes(fields);
-                //System.out.println(Arrays.toString(fields));
                 for (int j = 0; j < fields.length; j++) {
                     if (j==0) {
                         city[i] = fields[j];
@@ -33,7 +46,6 @@ public class CsvReader {
                         tempDensity[i] = fields[j];
                     }
                 }
-                //System.out.println(density[i]);
                 i++;
                 line = br.readLine();
 
@@ -49,11 +61,10 @@ public class CsvReader {
         }
 
         for (int j = 0; j < 20; j++) {
-            //System.out.println(city[j]);
-            //System.out.println(tempDensity[j]);
             density[j] = Integer.parseInt(tempDensity[j]);
-            //System.out.println(density[j]);
         }
+
+        resultArray(city, density, 0);
         quicksort(city, density, 0, 19);
 
     }
@@ -61,8 +72,7 @@ public class CsvReader {
     private static String[] removeTrailingQuotes(String[] fields) {
 
         String result[] = new String[fields.length];
-
-
+        
         for (int i=0;i<result.length;i++){
             result[i] = fields[i].replaceAll("^"+QUOTE, "").replaceAll(QUOTE+"$", "");
 
@@ -93,41 +103,33 @@ public class CsvReader {
         int j=der;         // j realiza la búsqueda de derecha a izquierda
         int aux;
         String auxCity;
-        System.out.println(A);
 
         while(i < j){                          // mientras no se crucen las búsquedas
             while(A[i] <= pivote && i < j) i++; // busca elemento mayor que pivote
             while(A[j] > pivote) j--;           // busca elemento menor que pivote
             if (i < j) {                        // si no se han cruzado
-                resultArray(city, A, 1);
                 auxCity = city[i];
                 aux= A[i];                      // los intercambia
                 city[i] = city[j];
                 A[i]=A[j];
                 city[j]=auxCity;
                 A[j]=aux;
-                resultArray(city, A, 2);
             }
         }
 
-        resultArray(city, A, 3);
         city[izq]=city[j];
         city[j]=pivoteCity;
         A[izq]=A[j];      // se coloca el pivote en su lugar de forma que tendremos
         A[j]=pivote;      // los menores a su izquierda y los mayores a su derecha
 
         if(izq < j-1) {
-            resultArray(city, A, 4);
             quicksort(city, A,izq,j-1);          // ordenamos subarray izquierdo
         }
         if(j+1 < der) {
-            resultArray(city, A, 5);
             quicksort(city, A,j+1,der);          // ordenamos subarray derecho
         }
-        resultArray(city, A, 6);
-        //for (int h = 0; h < 20; h++) {
-        //    System.out.println(city[h] + ": " + A[h]);
-        //}
+
+        resultArray(city, A, 1);
     }
 
 }
