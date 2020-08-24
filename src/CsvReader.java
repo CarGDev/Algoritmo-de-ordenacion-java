@@ -8,7 +8,8 @@ public class CsvReader {
     public static final String SEPARATOR = ";";
     public static final String QUOTE = "\"";
     private int i = 0;
-    String density[] = new String[20];
+    String tempDensity[] = new String[20];
+    int density[] = new String[20];
     String city[] = new String[20];
 
     public void CsvReader () throws IOException {
@@ -30,7 +31,7 @@ public class CsvReader {
                     if (j==0) {
                         city[i] = fields[j];
                     } else {
-                        density[i] = fields[j];
+                        tempDensity[i] = fields[j];
                     }
                 }
                 //System.out.println(density[i]);
@@ -50,8 +51,12 @@ public class CsvReader {
 
         for (int j = 0; j < 20; j++) {
             System.out.println(city[j]);
+            System.out.println(tempDensity[j]);
+            density[j] = Integer.parseInt(tempDensity[j]);
             System.out.println(density[j]);
         }
+
+
     }
 
     private static String[] removeTrailingQuotes(String[] fields) {
