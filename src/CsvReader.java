@@ -10,7 +10,7 @@ public class CsvReader {
     String tempDensity[]; // = new String[20];
     int density[]; // = new int[20];
     String city[]; // = new String[20];
-    String pathName = "../MOCK_DATA2.csv";
+    String pathName = "../MOCK_DATA.csv";
 
     public void CsvReader () throws IOException {
 
@@ -96,7 +96,7 @@ public class CsvReader {
         System.out.println(result);
     }
 
-    public static void quicksort(String[] city, int A[], int izq, int der) {
+    private static void quicksort(String[] city, int A[], int izq, int der) {
 
         String pivoteCity=city[izq];
         int pivote=A[izq]; // tomamos primer elemento como pivote
