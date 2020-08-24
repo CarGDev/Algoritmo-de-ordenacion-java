@@ -5,11 +5,12 @@ import java.util.Arrays;
 
 public class CsvReader {
 
-    public static final String SEPARATOR = ",";
+    public static final String SEPARATOR = ";";
     public static final String QUOTE = "\"";
-    private String density[] = new String[20];
-    private String city[] = new String[20];
     private int i = 0;
+    String density[] = new String[20];
+    String city[] = new String[20];
+
     public void CsvReader () throws IOException {
 
         BufferedReader br = null;
@@ -25,8 +26,13 @@ public class CsvReader {
 
                 fields = removeTrailingQuotes(fields);
                 //System.out.println(Arrays.toString(fields));
-                density[i] = Arrays.toString(fields);
-                city[i] = Arrays.toString(fields)
+                for (int j = 0; j < fields.length; j++) {
+                    if (j==0) {
+                        city[i] = fields[j];
+                    } else {
+                        density[i] = fields[j];
+                    }
+                }
                 //System.out.println(density[i]);
                 i++;
                 line = br.readLine();
@@ -43,6 +49,7 @@ public class CsvReader {
         }
 
         for (int j = 0; j < 20; j++) {
+            System.out.println(city[j]);
             System.out.println(density[j]);
         }
     }
@@ -51,10 +58,13 @@ public class CsvReader {
 
         String result[] = new String[fields.length];
 
+
         for (int i=0;i<result.length;i++){
             result[i] = fields[i].replaceAll("^"+QUOTE, "").replaceAll(QUOTE+"$", "");
+
         }
         return result;
     }
+
 
 }
