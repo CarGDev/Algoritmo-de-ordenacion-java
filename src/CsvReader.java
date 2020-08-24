@@ -4,12 +4,13 @@ import java.io.IOException;
 
 public class CsvReader {
 
-    public static final String SEPARATOR = ";";
+    public static final String SEPARATOR = ",";
     public static final String QUOTE = "\"";
     private int i = 0;
     String tempDensity[]; // = new String[20];
     int density[]; // = new int[20];
     String city[]; // = new String[20];
+    String pathName = "../MOCK_DATA2.csv";
 
     public void CsvReader () throws IOException {
 
@@ -17,7 +18,7 @@ public class CsvReader {
 
         try {
 
-            br = new BufferedReader(new FileReader("../MOCK_DATA.csv"));
+            br = new BufferedReader(new FileReader(pathName));
             String line2 = br.readLine();
 
             while (null != line2) {
@@ -32,7 +33,7 @@ public class CsvReader {
             city = new String[i];
             i = 0;
 
-            br = new BufferedReader(new FileReader("../MOCK_DATA.csv"));
+            br = new BufferedReader(new FileReader(pathName));
             String line = br.readLine();
 
             while (null != line) {
@@ -60,19 +61,19 @@ public class CsvReader {
             }
         }
 
-        for (int j = 0; j < 20; j++) {
+        for (int j = 0; j < tempDensity.length; j++) {
             density[j] = Integer.parseInt(tempDensity[j]);
         }
 
         resultArray(city, density, 0);
-        quicksort(city, density, 0, 19);
+        quicksort(city, density, 0, tempDensity.length - 1);
 
     }
 
     private static String[] removeTrailingQuotes(String[] fields) {
 
         String result[] = new String[fields.length];
-        
+
         for (int i=0;i<result.length;i++){
             result[i] = fields[i].replaceAll("^"+QUOTE, "").replaceAll(QUOTE+"$", "");
 
