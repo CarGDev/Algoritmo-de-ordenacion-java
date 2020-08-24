@@ -9,7 +9,7 @@ public class CsvReader {
     public static final String QUOTE = "\"";
     private int i = 0;
     String tempDensity[] = new String[20];
-    int density[] = new String[20];
+    int density[] = new int[20];
     String city[] = new String[20];
 
     public void CsvReader () throws IOException {
